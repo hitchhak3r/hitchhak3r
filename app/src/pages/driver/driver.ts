@@ -29,14 +29,20 @@ export class DriverPage {
   }
 
   updateOffers() {
-    this.availableOffers = this.af.database.list("/AvailableOffers").map(offers => (offers.map(offer => {
-      let distance = this.getHitchHikerDistance(offer);
-      return {
-        offer,
-        distance,
-        distanceDescription: distance === NaN ? "n'est pas disponible" : `${distance} km`
-      };
-    }).sort((a, b) => a.distance > b.distance)));
+    this.availableOffers = this.af.database.list("/AvailableOffers").map(offers => {
+      const offersWithDistance = offers.map(offer => {
+        const distance = this.getHitchHikerDistance(offer);
+        return {
+          offer,
+          distance,
+          distanceDescription: distance === NaN ? "n'est pas disponible" : `${distance.toFixed(2)} km`
+        };
+      });
+      
+      const sortedOffersWithDistance = offersWithDistance.sort((a, b) => a.distance - b.distance);
+
+      return sortedOffersWithDistance;
+    });
   }
 
   chooseItem(item: any) {
@@ -50,7 +56,7 @@ export class DriverPage {
         new google.maps.LatLng(this.position.latitude, this.position.longitude),
         new google.maps.LatLng(dest.lat, dest.lng));
 
-      return dist.toFixed(2);
+      return dist;
     }
     return NaN;
   }
