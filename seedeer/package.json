@@ -1,0 +1,10 @@
+{
+  "name": "hkr-seedeer",
+  "version": "1.0.0",
+  "description": "Tool to seed firebase database",
+  "main": "index.js",
+  "dependencies": {
+    "chance": "^1.0.6",
+    "firebase-admin": "^4.1.3"
+  }
+}
