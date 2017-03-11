@@ -5,12 +5,14 @@ import { ModeSelectPage } from "../pages/mode-select/mode-select";
 import { HitchikerPage } from "../pages/hitchiker/hitchiker";
 import { DriverPage } from "../pages/driver/driver";
 import { DriverPickupPage } from "../pages/driver-pickup/driver-pickup";
+import { ModalDestinationConfirmationPage } from "../pages/modal-destination-confirmation/modal-destination-confirmation";
 
 @NgModule({
   declarations: [
     MyApp,
     DriverPage,
     DriverPickupPage,
+    ModalDestinationConfirmationPage,
     HitchikerPage,
     ModeSelectPage
   ],
@@ -22,6 +24,7 @@ import { DriverPickupPage } from "../pages/driver-pickup/driver-pickup";
     MyApp,
     DriverPage,
     DriverPickupPage,
+    ModalDestinationConfirmationPage,
     HitchikerPage,
     ModeSelectPage
   ],
