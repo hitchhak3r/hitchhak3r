@@ -1,6 +1,7 @@
 import { Component, NgZone } from '@angular/core';
 import { NavController, NavParams, ModalController } from 'ionic-angular';
 import {ModalDestinationConfirmationPage} from "../modal-destination-confirmation/modal-destination-confirmation";
+import {AngularFire, FirebaseListObservable} from '../../../node_modules/angularfire2';
 
 /*
   Generated class for the Hitchiker page.
@@ -18,16 +19,19 @@ export class HitchikerPage {
   autocompleteItems;
   autocomplete;
   service = new google.maps.places.AutocompleteService();
+  availableOffers: FirebaseListObservable<any>;
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
               private modalCtrl: ModalController,
-              private zone: NgZone) {
+              private zone: NgZone,
+              private af:AngularFire) {
     this.autocompleteItems = [];
     this.autocomplete = {
       query: ''
     };
 
+    this.availableOffers = af.database.list('/AvailableOffers');
     //On recupere la localisation de l'appareil
   }
 
@@ -40,7 +44,7 @@ export class HitchikerPage {
       if(data) //Si on confirme que l'on veut un lift
       {
         //On pousse les donnees a la DB
-        
+
 
         //On attend un pickup
       }
