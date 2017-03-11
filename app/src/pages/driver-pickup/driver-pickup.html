@@ -5,19 +5,18 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-
   <ion-toolbar>
     <ion-title>Lieu de rencontre</ion-title>
   </ion-toolbar>
-
-  <button ion-button (click)="validate()" item-left>Go !</button>
-  <button ion-button (click)="dismiss()" item-right>Annuler</button>
-
 </ion-header>
-
 
 <ion-content padding>
   <div class="map-container">
     <div id="map" data-tap-disabled="true"></div>
   </div>
+
+  <ion-footer>
+    <button class="toolbar-button button-assertive" ion-button (click)="dismiss()" item-right>Annuler</button>
+    <button class="toolbar-button button-balanced" ion-button (click)="validate()" item-left>Go !</button>
+  </ion-footer>
 </ion-content>
