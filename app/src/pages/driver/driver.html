@@ -7,12 +7,20 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>driver</ion-title>
+    <ion-title>Conducteur</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
-
+  <ion-list>
+    <ion-item *ngfor="let offer of availableOffers">
+      <ion-avatar item-left>
+        <ion-icon name="person"></ion-icon>
+      </ion-avatar>
+      <h2>{{offer.Address}}</h2>
+      <h3>{{offer.Distance}}</h3>
+    </ion-item>
+  </ion-list>
 </ion-content>
