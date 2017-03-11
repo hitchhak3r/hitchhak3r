@@ -24,14 +24,9 @@ export class DriverPickupPage {
   offer;
 
 
-<<<<<<< HEAD
-  constructor(public navCtrl: NavController, public navParams: NavParams, private af: AngularFire) {
-    this.hitchHikerPosition = navParams.get("offer").Hitchhacker.GeoPosition;
-=======
   constructor(public navCtrl: NavController, public navParams: NavParams, public af: AngularFire) {
     this.offer = navParams.get("offer");
     this.hitchHikerPosition = this.offer.Hitchhacker.GeoPosition;
->>>>>>> 9a1b4a9ca95b29338c5b0f07a87de2d6723d6d70
     this.pickUpLocation = af.database.list("/PickupPointLocation");
 
     /*af.database.list("/AvailableOffers/" + this.offer.$key).$ref.on("value", (snapshot) => {
