@@ -6,12 +6,18 @@
 -->
 <ion-header>
 
-  <ion-navbar>
-    <ion-title>lieu de ramassage</ion-title>
-  </ion-navbar>
+  <ion-toolbar>
+    <ion-title>Lieu de ramassage</ion-title>
+  </ion-toolbar>
+
+  <button ion-button (click)="validate()" item-left>Go !</button>
+  <button ion-button (click)="dismiss()" item-right>Annuler</button>
 
 </ion-header>
 
 
 <ion-content padding>
+  <div class="map-container" ng-show="$root.enableMap">
+    <div id="map" data-tap-disabled="true"></div>
+  </div>
 </ion-content>

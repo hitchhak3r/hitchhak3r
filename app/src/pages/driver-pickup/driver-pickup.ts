@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
+declare var google;
 /*
   Generated class for the Driver page.
 
@@ -13,22 +14,17 @@ import { NavController, NavParams } from 'ionic-angular';
 })
 export class DriverPickupPage {
 
-  availableOffers = [
-    {
-      Address: 'Ikea',
-      Distance: '5 km'
-    },
-    {
-      Address: 'Gallerie 4 Saison',
-      Distance: '12 km'
-    },
-    {
-      Address: 'Pizza Hutt',
-      Distance: '23 km'
-    },
-  ];
+  constructor(public navCtrl: NavController, public navParams: NavParams) {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {}
+  }
+
+  dismiss(){
+    this.navCtrl.pop();
+  }
+
+  validate(){
+    this.navCtrl.pop();
+  }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad DriverPage');
