@@ -11,9 +11,9 @@
 </ion-header>
 
 <ion-content padding>
-  <div class="map-container">
-    <div id="map" data-tap-disabled="true"></div>
-  </div>
+  <sebm-google-map [latitude]="lat" [longitude]="lng">
+    <sebm-google-map-marker [latitude]="lat" [longitude]="lng"></sebm-google-map-marker>
+  </sebm-google-map>
 
   <ion-footer>
     <button ion-button class="toolbar-button button-cancel" (click)="dismiss()" item-right>Annuler</button>
