@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
+import { HitchikerPage } from "../hitchiker/hitchiker";
 
 /*
   Generated class for the ModeSelect page.
@@ -19,4 +20,7 @@ export class ModeSelectPage {
     console.log('ionViewDidLoad ModeSelectPage');
   }
 
+  goToHickerPage(){
+    this.navCtrl.push(HitchikerPage);
+  }
 }

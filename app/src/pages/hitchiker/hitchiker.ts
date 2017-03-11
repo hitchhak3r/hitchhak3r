@@ -13,10 +13,13 @@ import { NavController, NavParams } from 'ionic-angular';
 })
 export class HitchikerPage {
 
+  direction : string;
+
   constructor(public navCtrl: NavController, public navParams: NavParams) {}
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad HitchikerPage');
+  searchLocation(){
+    console.log(this.direction);
   }
 
+  on
 }
