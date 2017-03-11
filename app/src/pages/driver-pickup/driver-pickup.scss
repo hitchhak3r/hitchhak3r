@@ -14,8 +14,12 @@ page-driver-pickup {
         background-color: #33cd5f;
         position: absolute;
     }
-}
 
-.sebm-google-map-container {
-  height: 100%
+    .scroll-content {
+        padding: 0 !important;
+    }
+
+    sebm-google-map {
+        height: calc(100% - 36px) !important;
+    }
 }
