@@ -20,4 +20,6 @@ export class HitchikerPage {
   searchLocation(){
     console.log(this.direction);
   }
+
+  on
 }
