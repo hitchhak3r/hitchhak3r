@@ -15,7 +15,7 @@
 
 <ion-content padding>
   <ion-list>
-    <ion-item *ngFor="let offer of availableOffers | async" tappable (click)="chooseItem(item)">
+    <ion-item *ngFor="let offer of availableOffers | async" tappable (click)="chooseItem(offer)">
       <ion-avatar item-left>
         <ion-icon name="person"></ion-icon>
       </ion-avatar>

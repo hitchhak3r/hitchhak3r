@@ -33,12 +33,12 @@ export class DriverPage {
   }
 
   chooseItem(item: any) {
-    this.navCtrl.push(DriverPickupPage,{destination: item});
+    this.navCtrl.push(DriverPickupPage,{offer: item});
   }
 
   getHitchHikerDistance(item){
     if(this.position){
-      var dest = item.Hitchhacker.GeoPosition
+      var dest = item.Hitchhacker.GeoPosition;
       var dist = google.maps.geometry.spherical.computeDistanceBetween (
         new google.maps.LatLng(this.position.latitude, this.position.longitude),
         new google.maps.LatLng(dest.lat, dest.lng));
