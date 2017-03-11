@@ -50,13 +50,11 @@ export class HitchikerPage {
           text:"Go !",
           handler: () => {
             var snap = this.pushOfferToFirebase(item);
-            this.navCtrl.push(WaitingForDriverPage,{snap:snap});
+            this.navCtrl.push(WaitingForDriverPage,{offerNodeName:'/AvailableOffers/' + snap.key  , confirmationNodeName:'/AvailableOffers/' + snap.key + '/Confirmation'});
           }
         }]
     });
     alert.present();
-
-
   }
 
   alertGeolocalisation(){

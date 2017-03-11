@@ -6,6 +6,9 @@ import { HitchikerPage } from "../pages/hitchiker/hitchiker";
 import { DriverPage } from "../pages/driver/driver";
 import { DriverPickupPage } from "../pages/driver-pickup/driver-pickup";
 import { WaitingForDriverPage } from "../pages/waiting-for-driver/waiting-for-driver";
+import { ProposePickupToHichhakerPage } from "../pages/propose-pickup-to-hichhaker/propose-pickup-to-hichhaker"
+
+import { AgmCoreModule } from '../../node_modules/angular2-google-maps/core';
 
 // Import the AF2 Module
 import { AngularFireModule } from '../../node_modules/angularfire2';
@@ -26,11 +29,15 @@ export const firebaseConfig = {
     DriverPickupPage,
     HitchikerPage,
     ModeSelectPage,
-    WaitingForDriverPage
+    WaitingForDriverPage,
+    ProposePickupToHichhakerPage,
   ],
   imports: [
     IonicModule.forRoot(MyApp),
-    AngularFireModule.initializeApp(firebaseConfig)
+    AngularFireModule.initializeApp(firebaseConfig),
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyAgZbwwaHqgIt6MafJRI-yM_l3io2wzErw'
+    })
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -39,7 +46,8 @@ export const firebaseConfig = {
     DriverPickupPage,
     HitchikerPage,
     ModeSelectPage,
-    WaitingForDriverPage
+    WaitingForDriverPage,
+    ProposePickupToHichhakerPage
   ],
   providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}]
 })
