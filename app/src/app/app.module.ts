@@ -5,7 +5,7 @@ import { ModeSelectPage } from "../pages/mode-select/mode-select";
 import { HitchikerPage } from "../pages/hitchiker/hitchiker";
 import { DriverPage } from "../pages/driver/driver";
 import { DriverPickupPage } from "../pages/driver-pickup/driver-pickup";
-import { ModalDestinationConfirmationPage } from "../pages/modal-destination-confirmation/modal-destination-confirmation";
+import { WaitingForDriverPage } from "../pages/waiting-for-driver/waiting-for-driver";
 
 // Import the AF2 Module
 import { AngularFireModule } from '../../node_modules/angularfire2';
@@ -24,9 +24,9 @@ export const firebaseConfig = {
     MyApp,
     DriverPage,
     DriverPickupPage,
-    ModalDestinationConfirmationPage,
     HitchikerPage,
-    ModeSelectPage
+    ModeSelectPage,
+    WaitingForDriverPage
   ],
   imports: [
     IonicModule.forRoot(MyApp),
@@ -37,9 +37,9 @@ export const firebaseConfig = {
     MyApp,
     DriverPage,
     DriverPickupPage,
-    ModalDestinationConfirmationPage,
     HitchikerPage,
-    ModeSelectPage
+    ModeSelectPage,
+    WaitingForDriverPage
   ],
   providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}]
 })

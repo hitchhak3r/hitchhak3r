@@ -15,12 +15,12 @@
 
 <ion-content padding>
   <ion-list>
-    <ion-item *ngFor="let offer of availableOffers | async" tappable (click)="chooseItem(offer)">
+    <ion-item *ngFor="let offer of availableOffers | async" tappable (click)="chooseItem(item.offer)">
       <ion-avatar item-left>
         <ion-icon name="person"></ion-icon>
       </ion-avatar>
-      <h2>{{offer.Destination.Name}}</h2>
-      <h3>distance du passager {{getHitchHikerDistance(offer)}}</h3>
+      <h2>{{offer.offer.Destination.Name}}</h2>
+      <h3>Distance du passager {{offer.distanceDescription}}</h3>
     </ion-item>
   </ion-list>
 </ion-content>

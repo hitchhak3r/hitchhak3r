@@ -76,6 +76,12 @@ function addPickupPointLocation(destName, destPos) {
     }, pushErrorHandler);
 }
 
+
+function getfakepos(){
+    var position = chance.coordinates.split(',');
+    return { lat: position[0], lng: position[1] }
+}
+
 function addTransit(driverPosition, pickupName, pickupPos, destName, destPos) {
     database.ref("Transit").push({
         DriverPosition: driverPosition,
@@ -95,6 +101,7 @@ for(var data of parkingDataSources){
 }
 
 for(let i = 0; i < 10; ++i) {
-    addOffer(chance.coordinates(), chance.address(), chance.coordinates());
+
+    //addOffer(chance.coordinates(), chance.address(), getfakepos());
     addTransit(chance.coordinates(), chance.address(), chance.coordinates(), chance.address(), chance.coordinates());
 }
