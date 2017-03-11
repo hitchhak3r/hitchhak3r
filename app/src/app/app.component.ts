@@ -4,9 +4,7 @@ import { Platform, MenuController, Nav } from 'ionic-angular';
 
 import { StatusBar, Splashscreen } from 'ionic-native';
 
-import { HelloIonicPage } from '../pages/hello-ionic/hello-ionic';
-import { ListPage } from '../pages/list/list';
-import {ModeSelectPage} from "../pages/mode-select/mode-select";
+import { ModeSelectPage } from "../pages/mode-select/mode-select";
 
 
 @Component({

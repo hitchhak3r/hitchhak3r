@@ -14,7 +14,7 @@
 
 
 <ion-content padding>
-  <button class="mode-button" ion-button outline>
+  <button class="mode-button" ion-button outline (click)="goToDriverPage()">
     <ion-grid>
       <ion-row class="icon-row">
         <ion-icon name="car"></ion-icon>
@@ -24,7 +24,7 @@
       </ion-row>
     </ion-grid>
   </button>
-  <button class="mode-button" ion-button outline (click)="goToHickerPage()">
+  <button class="mode-button" ion-button outline (click)="goToHitchHikerPage()">
     <ion-grid>
       <ion-row class="icon-row">
         <ion-icon name="thumbs-up"></ion-icon>

@@ -13,22 +13,24 @@ import { NavController, NavParams } from 'ionic-angular';
 })
 export class DriverPage {
 
-  availableOffers = [
-    {
-      Address: 'Ikea',
-      Distance: '5 km'
-    },
-    {
-      Address: 'Gallerie 4 Saison',
-      Distance: '12 km'
-    },
-    {
-      Address: 'Pizza Hutt',
-      Distance: '23 km'
-    },
-  ];
+  availableOffers;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {}
+  constructor(public navCtrl: NavController, public navParams: NavParams) {
+    this.availableOffers = [
+      {
+        Address: 'Ikea',
+        Distance: '5 km'
+      },
+      {
+        Address: 'Gallerie 4 Saison',
+        Distance: '12 km'
+      },
+      {
+        Address: 'Pizza Hutt',
+        Distance: '23 km'
+      },
+    ];
+  }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad DriverPage');

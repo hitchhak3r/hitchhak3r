@@ -1,12 +1,11 @@
 import { NgModule, ErrorHandler } from '@angular/core';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
-import { HelloIonicPage } from '../pages/hello-ionic/hello-ionic';
-import { ItemDetailsPage } from '../pages/item-details/item-details';
-import { ListPage } from '../pages/list/list';
-import {ModeSelectPage} from "../pages/mode-select/mode-select";
-import {HitchikerPage} from "../pages/hitchiker/hitchiker";
-import {ModalDestinationConfirmationPage} from "../pages/modal-destination-confirmation/modal-destination-confirmation";
+import { ModeSelectPage } from "../pages/mode-select/mode-select";
+import { HitchikerPage } from "../pages/hitchiker/hitchiker";
+import { DriverPage } from "../pages/driver/driver";
+import { DriverPickupPage } from "../pages/driver-pickup/driver-pickup";
+import { ModalDestinationConfirmationPage } from "../pages/modal-destination-confirmation/modal-destination-confirmation";
 
 // Import the AF2 Module
 import { AngularFireModule } from '../../node_modules/angularfire2';
@@ -23,11 +22,9 @@ export const firebaseConfig = {
 @NgModule({
   declarations: [
     MyApp,
-    HelloIonicPage,
-    ItemDetailsPage,
-    ListPage,
+    DriverPage,
+    DriverPickupPage,
     ModalDestinationConfirmationPage,
-    // DriverPage,
     HitchikerPage,
     ModeSelectPage
   ],
@@ -38,11 +35,9 @@ export const firebaseConfig = {
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    HelloIonicPage,
-    ItemDetailsPage,
-    ListPage,
+    DriverPage,
+    DriverPickupPage,
     ModalDestinationConfirmationPage,
-    // DriverPage,
     HitchikerPage,
     ModeSelectPage
   ],
