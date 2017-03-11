@@ -20,7 +20,7 @@ export class ModeSelectPage {
     console.log('ionViewDidLoad ModeSelectPage');
   }
 
-  goToHickerPage(){
+  goToHickerPage() {
     this.navCtrl.push(HitchikerPage);
   }
 }

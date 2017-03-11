@@ -6,6 +6,7 @@ import { ItemDetailsPage } from '../pages/item-details/item-details';
 import { ListPage } from '../pages/list/list';
 import {ModeSelectPage} from "../pages/mode-select/mode-select";
 import {HitchikerPage} from "../pages/hitchiker/hitchiker";
+import {ModalDestinationConfirmationPage} from "../pages/modal-destination-confirmation/modal-destination-confirmation";
 
 @NgModule({
   declarations: [
@@ -13,6 +14,7 @@ import {HitchikerPage} from "../pages/hitchiker/hitchiker";
     HelloIonicPage,
     ItemDetailsPage,
     ListPage,
+    ModalDestinationConfirmationPage,
     // DriverPage,
     HitchikerPage,
     ModeSelectPage
@@ -26,6 +28,7 @@ import {HitchikerPage} from "../pages/hitchiker/hitchiker";
     HelloIonicPage,
     ItemDetailsPage,
     ListPage,
+    ModalDestinationConfirmationPage,
     // DriverPage,
     HitchikerPage,
     ModeSelectPage
