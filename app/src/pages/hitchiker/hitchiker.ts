@@ -1,6 +1,6 @@
 import { Component, NgZone } from '@angular/core';
 import { AlertController, NavController, NavParams, ModalController } from 'ionic-angular';
-import { ModalDestinationConfirmationPage } from "../modal-destination-confirmation/modal-destination-confirmation";
+import { WaitingForDriverPage } from "../waiting-for-driver/waiting-for-driver"
 import {AngularFire, FirebaseListObservable} from '../../../node_modules/angularfire2';
 import { Geolocation } from 'ionic-native'
 
@@ -21,7 +21,6 @@ export class HitchikerPage {
   autocomplete;
   service = new google.maps.places.AutocompleteService();
   availableOffers: FirebaseListObservable<any>;
-  myOfferConfirmation: FirebaseListObservable<any>;
   myPosition;
   geoposOk = false;
 
@@ -41,17 +40,23 @@ export class HitchikerPage {
   }
 
   chooseItem(item: any) {
-    //Affichage d'une confirmation de deplacement
-    let modal = this.modalCtrl.create(ModalDestinationConfirmationPage,{destination: item.description});
-    let me = this;
-    modal.onDidDismiss(data => {
-      if(data) //Si on confirme que l'on veut un lift
-      {
-        me.pushOfferToFirebase(item);
-        //TODO : ajouter les conducteurs a proximite
-      }
+    let alert = this.alertCtrl.create({
+      title: "Je veux un lift pour " + item.description,
+      buttons:[
+        {
+          text:"Annuler"
+        },
+        {
+          text:"Go !",
+          handler: () => {
+            var snap = this.pushOfferToFirebase(item);
+            this.navCtrl.push(WaitingForDriverPage,{snap:snap});
+          }
+        }]
     });
-    modal.present();
+    alert.present();
+
+
   }
 
   alertGeolocalisation(){
@@ -78,12 +83,7 @@ export class HitchikerPage {
         DriverConfirmation: false
       }
     });
-
-    //On se hook sur notre offre
-    this.myOfferConfirmation = this.af.database.list('/AvailableOffers/' + snap.key + '/Confirmation');
-    this.myOfferConfirmation.$ref.on('value', (s) => {
-      //Todo : gerer l'attente d'un chauffeur
-    });
+    return snap;
   }
 
   updateSearch() {
