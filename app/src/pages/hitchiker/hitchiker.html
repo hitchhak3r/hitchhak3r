@@ -7,12 +7,17 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>hitchiker</ion-title>
+    <ion-title> </ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
-
+  <ion-item>
+    <ion-input [(ngModel)]="direction" name="dir" item-left placeholder="Où allez vous ?"></ion-input>
+    <button ion-button item-right icon-only (click)="searchLocation()">
+      <ion-icon name="search"></ion-icon>
+    </button>
+  </ion-item>
 </ion-content>

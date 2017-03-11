@@ -5,6 +5,7 @@ import { HelloIonicPage } from '../pages/hello-ionic/hello-ionic';
 import { ItemDetailsPage } from '../pages/item-details/item-details';
 import { ListPage } from '../pages/list/list';
 import {ModeSelectPage} from "../pages/mode-select/mode-select";
+import {HitchikerPage} from "../pages/hitchiker/hitchiker";
 
 @NgModule({
   declarations: [
@@ -13,7 +14,7 @@ import {ModeSelectPage} from "../pages/mode-select/mode-select";
     ItemDetailsPage,
     ListPage,
     // DriverPage,
-    // HitchikerPage,
+    HitchikerPage,
     ModeSelectPage
   ],
   imports: [
@@ -26,7 +27,7 @@ import {ModeSelectPage} from "../pages/mode-select/mode-select";
     ItemDetailsPage,
     ListPage,
     // DriverPage,
-    // HitchikerPage,
+    HitchikerPage,
     ModeSelectPage
   ],
   providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}]
