@@ -1,5 +1,8 @@
 const firebase = require('firebase-admin');
 const chance = require('chance').Chance();
+const parkingDataSources = [
+    require("./stationnementSherbrooke.json"),
+    require("./stationnementRimouski.json")];
 
 firebase.initializeApp({
     credential: firebase.credential.cert({
@@ -19,6 +22,35 @@ firebase.initializeApp({
 
 const database = firebase.database();
 
+function importParkings(data) {
+    for(var feature of data.features){
+        var name = ("Stationnement " + (feature.properties.ID || feature.properties.No_stat || "")).trim();
+        var position = findPosition(feature.geometry.coordinates);
+
+        if(name && position){
+            try{
+                addPickupPointLocation(name, position);
+            }
+            catch (err){
+                console.log(err);
+            }
+        }
+        else {
+            console.log("unable to import: " + data);
+        }
+    }
+}
+
+function findPosition(coordinates) {
+    var position = coordinates;
+    while (position){
+        if(!Array.isArray(position[0])){
+            return {lng:position[0], lat:position[1]};
+        }
+        position = position[0];
+    }
+}
+
 function pushErrorHandler(err) {
     if (err) {
         console.log(err);
@@ -30,7 +62,7 @@ function pushErrorHandler(err) {
 function addOffer(hitchikerPos, destName, destPos) {
     database.ref("/AvailableOffers").push({
         Destination: {
-            Address: destName,
+            Name: destName,
             GeoPosition: destPos,
         },
         HitchackerGeoPosition: hitchikerPos,
@@ -39,7 +71,7 @@ function addOffer(hitchikerPos, destName, destPos) {
 
 function addPickupPointLocation(destName, destPos) {
     database.ref("PickupPointLocation").push({
-        Address: destName,
+        Name: destName,
         GeoPosition: destPos,
     }, pushErrorHandler);
 }
@@ -58,9 +90,11 @@ function addTransit(driverPosition, pickupName, pickupPos, destName, destPos) {
     }, pushErrorHandler);
 }
 
+for(var data of parkingDataSources){
+    importParkings(data);
+}
 
 for(let i = 0; i < 10; ++i) {
     addOffer(chance.coordinates(), chance.address(), chance.coordinates());
-    addPickupPointLocation(chance.address(), chance.coordinates());
     addTransit(chance.coordinates(), chance.address(), chance.coordinates(), chance.address(), chance.coordinates());
 }
