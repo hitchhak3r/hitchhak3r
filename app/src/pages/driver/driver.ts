@@ -30,7 +30,9 @@ export class DriverPage {
 
   updateOffers() {
     this.availableOffers = this.af.database.list("/AvailableOffers").map(offers => {
-      const offersWithDistance = offers.map(offer => {
+      const offersWithDistance = offers
+        .filter(offer => !offer.Confirmation.DriverConfirmation && !offer.Confirmation.HitchhackerConfirmation)
+        .map(offer => {
         const distance = this.getHitchHikerDistance(offer);
         return {
           offer,

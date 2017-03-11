@@ -19,12 +19,23 @@ export class DriverPickupPage {
   directionsDisplay;
   map;
   closestLocation;
+  lat;
+  lng;
+  offer;
 
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private af: AngularFire) {
-
-    this.hitchHikerPosition = navParams.get("offer").Hitchhacker.GeoPosition;
+  constructor(public navCtrl: NavController, public navParams: NavParams, public af: AngularFire) {
+    this.offer = navParams.get("offer");
+    this.hitchHikerPosition = this.offer.Hitchhacker.GeoPosition;
     this.pickUpLocation = af.database.list("/PickupPointLocation");
+
+    /*af.database.list("/AvailableOffers/" + this.offer.$key).$ref.on("value", (snapshot) => {
+      var offer = snapshot.val();
+
+      if(!offer
+        || offer.Confirmation.DriverConfirmation)
+        this.dismiss();
+    });*/
 
     this.directionsDisplay = new google.maps.DirectionsRenderer();
 
@@ -45,13 +56,8 @@ export class DriverPickupPage {
         }
       }
 
-      var dest = new google.maps.LatLng(this.closestLocation.GeoPosition.lat, this.closestLocation.GeoPosition.lng);
-      var mapOptions = {
-        zoom:7,
-        center: dest
-      };
-      this.map = new google.maps.Map(document.getElementById('map'), mapOptions);
-      this.directionsDisplay.setMap(this.map);
+      this.lat = this.closestLocation.GeoPosition.lat;
+      this.lng = this.closestLocation.GeoPosition.lng;
     });
   }
 
@@ -60,7 +66,10 @@ export class DriverPickupPage {
   }
 
   validate() {
-    this.navCtrl.pop();
+    this.af.database.object("/AvailableOffers/" + this.offer.$key + "/Confirmation/DriverConfirmation").set(true);
+    this.af.database.list("/AvailableOffers/" + this.offer.$key).push({
+      PickupLocation: this.closestLocation
+    });
   }
 
   ionViewDidLoad() {
