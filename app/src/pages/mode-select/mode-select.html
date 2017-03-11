@@ -7,13 +7,31 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>ModeSelect</ion-title>
+    <ion-title>Type d'opérateur</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
-  <button ion-button outline><i class="fa fa-car"></i>Conducteur</button>
-  <button ion-button outline (click)="goToHickerPage()"><i class="fa fa-thumbs-o-up"></i>Passager</button>
+  <button class="mode-button" ion-button outline>
+    <ion-grid>
+      <ion-row class="icon-row">
+        <ion-icon name="car"></ion-icon>
+      </ion-row>
+      <ion-row class="text-row">
+        <ion-label>Conducteur</ion-label>
+      </ion-row>
+    </ion-grid>
+  </button>
+  <button class="mode-button" ion-button outline>
+    <ion-grid>
+      <ion-row class="icon-row">
+        <ion-icon name="thumbs-up"></ion-icon>
+      </ion-row>
+      <ion-row class="text-row">
+        <ion-label>Passager</ion-label>
+      </ion-row>
+    </ion-grid>
+  </button>
 </ion-content>
