@@ -13,6 +13,21 @@ import { NavController, NavParams } from 'ionic-angular';
 })
 export class DriverPage {
 
+  availableOffers = [
+    {
+      Address: 'Ikea',
+      Distance: '5 km'
+    },
+    {
+      Address: 'Gallerie 4 Saison',
+      Distance: '12 km'
+    },
+    {
+      Address: 'Pizza Hutt',
+      Distance: '23 km'
+    },
+  ];
+
   constructor(public navCtrl: NavController, public navParams: NavParams) {}
 
   ionViewDidLoad() {

@@ -4,13 +4,18 @@ import { MyApp } from './app.component';
 import { HelloIonicPage } from '../pages/hello-ionic/hello-ionic';
 import { ItemDetailsPage } from '../pages/item-details/item-details';
 import { ListPage } from '../pages/list/list';
+import {ModeSelectPage} from "../pages/mode-select/mode-select";
+import {HitchikerPage} from "../pages/hitchiker/hitchiker";
 
 @NgModule({
   declarations: [
     MyApp,
     HelloIonicPage,
     ItemDetailsPage,
-    ListPage
+    ListPage,
+    // DriverPage,
+    HitchikerPage,
+    ModeSelectPage
   ],
   imports: [
     IonicModule.forRoot(MyApp)
@@ -20,7 +25,10 @@ import { ListPage } from '../pages/list/list';
     MyApp,
     HelloIonicPage,
     ItemDetailsPage,
-    ListPage
+    ListPage,
+    // DriverPage,
+    HitchikerPage,
+    ModeSelectPage
   ],
   providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}]
 })
