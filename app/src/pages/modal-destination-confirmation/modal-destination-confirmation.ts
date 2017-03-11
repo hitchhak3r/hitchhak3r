@@ -14,6 +14,7 @@ import { ViewController, NavParams } from 'ionic-angular';
 export class ModalDestinationConfirmationPage {
 
   destination;
+  geoposOk: boolean;
 
   constructor(public viewCtrl: ViewController, public navParams: NavParams) {
     this.destination = navParams.get('destination');

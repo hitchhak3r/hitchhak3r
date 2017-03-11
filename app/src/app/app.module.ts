@@ -26,7 +26,7 @@ export const firebaseConfig = {
     DriverPickupPage,
     ModalDestinationConfirmationPage,
     HitchikerPage,
-    ModeSelectPage
+    ModeSelectPage,
   ],
   imports: [
     IonicModule.forRoot(MyApp),
@@ -39,7 +39,7 @@ export const firebaseConfig = {
     DriverPickupPage,
     ModalDestinationConfirmationPage,
     HitchikerPage,
-    ModeSelectPage
+    ModeSelectPage,
   ],
   providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}]
 })

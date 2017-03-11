@@ -1,7 +1,8 @@
 import { Component, NgZone } from '@angular/core';
-import { NavController, NavParams, ModalController } from 'ionic-angular';
-import {ModalDestinationConfirmationPage} from "../modal-destination-confirmation/modal-destination-confirmation";
+import { AlertController, NavController, NavParams, ModalController } from 'ionic-angular';
+import { ModalDestinationConfirmationPage } from "../modal-destination-confirmation/modal-destination-confirmation";
 import {AngularFire, FirebaseListObservable} from '../../../node_modules/angularfire2';
+import { Geolocation } from 'ionic-native'
 
 /*
   Generated class for the Hitchiker page.
@@ -20,19 +21,23 @@ export class HitchikerPage {
   autocomplete;
   service = new google.maps.places.AutocompleteService();
   availableOffers: FirebaseListObservable<any>;
+  myOfferConfirmation: FirebaseListObservable<any>;
+  myPosition;
+  geoposOk = false;
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
               private modalCtrl: ModalController,
               private zone: NgZone,
-              private af:AngularFire) {
+              private af:AngularFire,
+              private alertCtrl:AlertController) {
     this.autocompleteItems = [];
     this.autocomplete = {
       query: ''
     };
 
     this.availableOffers = af.database.list('/AvailableOffers');
-    //On recupere la localisation de l'appareil
+    this.updateGeolocalisation();
   }
 
   chooseItem(item: any) {
@@ -40,16 +45,45 @@ export class HitchikerPage {
     let modal = this.modalCtrl.create(ModalDestinationConfirmationPage,{destination: item.description});
     let me = this;
     modal.onDidDismiss(data => {
-      console.log(data)
       if(data) //Si on confirme que l'on veut un lift
       {
-        //On pousse les donnees a la DB
-
-
-        //On attend un pickup
+        me.pushOfferToFirebase(item);
+        //TODO : ajouter les conducteurs a proximite
       }
     });
     modal.present();
+  }
+
+  alertGeolocalisation(){
+    let alert = this.alertCtrl.create({
+      title: "Impossible d'obtenir votre position",
+      message: "Veuillez activer votre geolocalisation et redémarrer l'application",
+      buttons:[{text:"Je comprends !"}]
+    });
+    alert.present();
+  }
+
+  pushOfferToFirebase(item :any){
+    //On pousse les donnees a la DB
+    let snap = this.availableOffers.push({
+      Destination:{
+        Geoposition:item.place_id,
+        Name:item.description
+      },
+      Hitchhacker:{
+        GeoPosition: this.myPosition,
+      },
+      Confirmation:{
+        HitchhackerConfirmation: false,
+        DriverConfirmation: false
+      }
+    });
+
+    //On se hook sur notre offre
+    this.myOfferConfirmation = this.af.database.list('/AvailableOffers/' + snap.key + '/Confirmation');
+    this.myOfferConfirmation.$ref.on('value', (s) => {
+      //Todo : gerer l'attente d'un chauffeur
+    });
   }
 
   updateSearch() {
@@ -67,6 +101,18 @@ export class HitchikerPage {
           });
         }
       });
+    });
+  }
+
+  updateGeolocalisation(){
+    Geolocation.getCurrentPosition().then((resp) => {
+      this.myPosition = {
+        lat: resp.coords.latitude,
+        lng: resp.coords.longitude
+      };
+      this.geoposOk = true;//Si pas de geopos, on empeche de demander un pick up
+    }).catch((error) => {
+      this.geoposOk = false;
     });
   }
 }
