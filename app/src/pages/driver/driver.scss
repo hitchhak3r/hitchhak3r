@@ -1,3 +1,25 @@
 page-driver {
+    $scale: 1.4;
 
+    ion-avatar {
+        margin: 0px 5px * $scale 0px -16px !important;
+
+        ion-icon {
+            font-size: 220% * $scale;
+        }
+    }
+
+    .item-md {
+        h2 {
+            font-size: 1.6rem * $scale;
+            word-wrap: break-word;
+            white-space: normal;
+        }
+
+        h3 {
+            font-size: 1.4rem * $scale;
+            word-wrap: break-word;
+            white-space: normal;
+        }
+    }
 }
