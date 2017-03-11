@@ -84,6 +84,11 @@ export class HitchikerPage {
     return snap;
   }
 
+  dismiss() {
+    this.autocomplete.query = '';
+    this.autocompleteItems.splice(0);
+  }
+
   updateSearch() {
     if (this.autocomplete.query == '') {
       this.autocompleteItems = [];

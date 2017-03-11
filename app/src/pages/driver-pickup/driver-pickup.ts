@@ -1,13 +1,10 @@
 import {Component} from '@angular/core';
 import {NavController, NavParams} from 'ionic-angular';
 import {AngularFire, FirebaseListObservable} from '../../../node_modules/angularfire2'
-declare var google;
-/*
- Generated class for the Driver page.
 
- See http://ionicframework.com/docs/v2/components/#navigation for more info on
- Ionic pages and navigation.
- */
+declare var google;
+declare var window;
+
 @Component({
   selector: 'page-driver-pickup',
   templateUrl: 'driver-pickup.html'
@@ -70,6 +67,7 @@ export class DriverPickupPage {
     this.af.database.list("/AvailableOffers/" + this.offer.$key).push({
       PickupLocation: this.closestLocation
     });
+    window.location = `geo:${this.lng},${this.lat};u=35`;
   }
 
   ionViewDidLoad() {
