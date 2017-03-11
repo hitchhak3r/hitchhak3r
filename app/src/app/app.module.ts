@@ -1,19 +1,16 @@
 import { NgModule, ErrorHandler } from '@angular/core';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
-import { HelloIonicPage } from '../pages/hello-ionic/hello-ionic';
-import { ItemDetailsPage } from '../pages/item-details/item-details';
-import { ListPage } from '../pages/list/list';
-import {ModeSelectPage} from "../pages/mode-select/mode-select";
-import {HitchikerPage} from "../pages/hitchiker/hitchiker";
+import { ModeSelectPage } from "../pages/mode-select/mode-select";
+import { HitchikerPage } from "../pages/hitchiker/hitchiker";
+import { DriverPage } from "../pages/driver/driver";
+import { DriverPickupPage } from "../pages/driver-pickup/driver-pickup";
 
 @NgModule({
   declarations: [
     MyApp,
-    HelloIonicPage,
-    ItemDetailsPage,
-    ListPage,
-    // DriverPage,
+    DriverPage,
+    DriverPickupPage,
     HitchikerPage,
     ModeSelectPage
   ],
@@ -23,10 +20,8 @@ import {HitchikerPage} from "../pages/hitchiker/hitchiker";
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    HelloIonicPage,
-    ItemDetailsPage,
-    ListPage,
-    // DriverPage,
+    DriverPage,
+    DriverPickupPage,
     HitchikerPage,
     ModeSelectPage
   ],
