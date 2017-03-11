@@ -6,8 +6,10 @@ import { DriverPickupPage } from '../driver-pickup/driver-pickup';
 import { AngularFire } from '../../../node_modules/angularfire2'
 import { IOffer } from "../../model/IOffer";
 import 'rxjs/Rx';
+import { Speech } from "../../speech";
 
 declare var google;
+
 @Component({
   selector: 'page-driver',
   templateUrl: 'driver.html'
@@ -37,9 +39,11 @@ export class DriverPage {
           distance,
           distanceDescription: distance === NaN ? "n'est pas disponible" : `${distance.toFixed(2)} km`
         };
-      });
+      }).filter(offer => offer.distance < 25);
 
       const sortedOffersWithDistance = offersWithDistance.sort((a, b) => a.distance - b.distance);
+
+      Speech.say("La liste des passager à été mise à jour.")
 
       return sortedOffersWithDistance;
     });

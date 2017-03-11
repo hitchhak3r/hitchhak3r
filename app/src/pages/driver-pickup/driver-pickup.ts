@@ -22,7 +22,6 @@ export class DriverPickupPage {
 
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private af: AngularFire) {
-
     this.hitchHikerPosition = navParams.get("offer").Hitchhacker.GeoPosition;
     this.pickUpLocation = af.database.list("/PickupPointLocation");
 
