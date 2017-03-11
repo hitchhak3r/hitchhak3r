@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import {AngularFire, FirebaseListObservable} from '../../../node_modules/angularfire2';
+import { ProposePickupToHichhakerPage } from "../propose-pickup-to-hichhaker/propose-pickup-to-hichhaker"
 
 /*
   Generated class for the WaitingForDriver page.
@@ -14,25 +15,27 @@ import {AngularFire, FirebaseListObservable} from '../../../node_modules/angular
 })
 export class WaitingForDriverPage {
 
-  snap;
+  offerNodeName
+  confirmationNodeName;
   myOfferConfirmation: FirebaseListObservable<any>;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public af: AngularFire) {
     //On se hook sur notre offre
-    this.snap = this.navParams.get('snap');
-    this.myOfferConfirmation = this.af.database.list('/AvailableOffers/' + this.snap.key + '/Confirmation');
+    this.offerNodeName = this.navParams.get("offerNodeName");
+    this.confirmationNodeName = this.navParams.get("confirmationNodeName");
+    console.log('confirmationNodeName = ' + this.confirmationNodeName)
+    this.myOfferConfirmation = this.af.database.list(this.confirmationNodeName);
     this.myOfferConfirmation.$ref.on('value', (s) => {
       if(s.val().DriverConfirmation)
-        console.log('Un chauffeur veut te prendre !')
-        //Todo : On va se faire pickup, on propose une location !
+        //Todo : ajouter la position du pickup sur la map !
+        this.navCtrl.push(ProposePickupToHichhakerPage, { confirmationNode:this.myOfferConfirmation });
       });
   }
 
   cancelSearch(){
     //On retire l'offre et on reviens en arriere
     this.myOfferConfirmation.$ref.off();
-    console.log("on remove le nod " + "/AvailableOffers/" + this.snap.key);
-    this.af.database.list('/AvailableOffers/' + this.snap.key).remove();
+    this.af.database.list(this.offerNodeName).remove();
     this.navCtrl.pop();
   }
 
