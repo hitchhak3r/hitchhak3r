@@ -1,7 +1,6 @@
 import {Component} from '@angular/core';
 import {NavController, NavParams} from 'ionic-angular';
 import {AngularFire, FirebaseListObservable} from '../../../node_modules/angularfire2';
-import {ModeSelectPage} from '../mode-select/mode-select';
 
 declare var google;
 /*
@@ -27,7 +26,8 @@ export class DriverPickupPage {
   mylat;
   offer;
   name;
-  fitBounds
+  fitBounds;
+  zoom;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public af: AngularFire) {
     this.offer = navParams.get("offer");
@@ -68,6 +68,7 @@ export class DriverPickupPage {
       this.fitBounds = new google.maps.LatLngBounds();
       this.fitBounds.extend(new google.maps.LatLng(this.mylat, this.mylng));
       this.fitBounds.extend(new google.maps.LatLng(this.destlat, this.destlng));
+      this.zoom = 12;
     });
   }
 
@@ -78,7 +79,6 @@ export class DriverPickupPage {
   validate() {
     this.af.database.object("/AvailableOffers/" + this.offer.$key + "/Confirmation/DriverConfirmation").set(true);
     this.af.database.object("/AvailableOffers/" + this.offer.$key + "/PickupLocation").set(this.closestLocation);
-    this.navCtrl.popTo(ModeSelectPage);
   }
 
   ionViewDidLoad() {
