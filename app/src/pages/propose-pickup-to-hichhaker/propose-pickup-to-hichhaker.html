@@ -10,11 +10,11 @@
 
 <ion-content padding>
   <sebm-google-map [latitude]="lat" [longitude]="lng">
-    <sebm-google-map-marker [latitude]="lat" [longitude]="lng" []></sebm-google-map-marker>
+    <sebm-google-map-marker [latitude]="lat" [longitude]="lng" [label]="mark"></sebm-google-map-marker>
   </sebm-google-map>
 
   <ion-label>Hello, world !</ion-label>
-    <button ion-button (click)="cancelPickupProposition()" item-left>
-      Rendu !
-    </button>
+  <button ion-button (click)="cancelPickupProposition()" item-left>
+    Rendu !
+  </button>
 </ion-content>

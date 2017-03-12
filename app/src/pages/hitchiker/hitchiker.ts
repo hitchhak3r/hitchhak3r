@@ -51,7 +51,7 @@ export class HitchikerPage {
           handler: () => {
             var snap = this.pushOfferToFirebase(item);
             this.navCtrl.push(WaitingForDriverPage,{
-              offerNodeName:'/AvailableOffers/' + snap.key  ,
+              offerNodeName:'/AvailableOffers/' + snap.key,
               confirmationNodeName:'/AvailableOffers/' + snap.key + '/Confirmation',
               pickupLocationNodeName:'/AvailableOffers/' + snap.key + '/PickupLocation'
             });
