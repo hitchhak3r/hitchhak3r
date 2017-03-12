@@ -4,12 +4,8 @@ import {AngularFire, FirebaseListObservable} from '../../../node_modules/angular
 import {ModeSelectPage} from '../mode-select/mode-select';
 
 declare var google;
-/*
- Generated class for the Driver page.
+declare var window;
 
- See http://ionicframework.com/docs/v2/components/#navigation for more info on
- Ionic pages and navigation.
- */
 @Component({
   selector: 'page-driver-pickup',
   templateUrl: 'driver-pickup.html'
@@ -79,6 +75,7 @@ export class DriverPickupPage {
     this.af.database.object("/AvailableOffers/" + this.offer.$key + "/Confirmation/DriverConfirmation").set(true);
     this.af.database.object("/AvailableOffers/" + this.offer.$key + "/PickupLocation").set(this.closestLocation);
     this.navCtrl.popTo(ModeSelectPage);
+    window.location = `geo:${this.mylng},${this.mylat};u=35`;
   }
 
   ionViewDidLoad() {
