@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
-import { DriverPage } from "../driver/driver";
 
 /*
   Generated class for the GpsNav page.
