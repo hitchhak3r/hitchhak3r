@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {NavController, NavParams} from 'ionic-angular';
-import {AngularFire, FirebaseListObservable} from '../../../node_modules/angularfire2';
+import { AngularFire, FirebaseListObservable } from '../../../node_modules/angularfire2';
+import { GpsNavPage } from "../gps-nav/gps-nav";
 
 declare var google;
 declare var window;
@@ -83,7 +84,8 @@ export class DriverPickupPage {
   validate() {
     this.af.database.object("/AvailableOffers/" + this.offer.$key + "/PickupLocation").set(this.closestLocation);
     this.af.database.object("/AvailableOffers/" + this.offer.$key + "/Confirmation/DriverConfirmation").set(true);
-    window.location = `geo:${this.mylng},${this.mylat};u=35`;
+    // window.location = `geo:${this.mylng},${this.mylat};u=35`;
+    this.navCtrl.push(GpsNavPage);
   }
 
   ionViewDidLoad() {

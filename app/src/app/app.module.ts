@@ -11,6 +11,7 @@ import { AgmCoreModule } from '../../node_modules/angular2-google-maps/core';
 
 // Import the AF2 Module
 import { AngularFireModule } from '../../node_modules/angularfire2';
+import { GpsNavPage } from "../pages/gps-nav/gps-nav";
 
 // AF2 Settings
 export const firebaseConfig = {
@@ -29,6 +30,7 @@ export const firebaseConfig = {
     HitchikerPage,
     ModeSelectPage,
     ProposePickupToHichhakerPage,
+    GpsNavPage
   ],
   imports: [
     IonicModule.forRoot(MyApp),
@@ -44,7 +46,8 @@ export const firebaseConfig = {
     DriverPickupPage,
     HitchikerPage,
     ModeSelectPage,
-    ProposePickupToHichhakerPage
+    ProposePickupToHichhakerPage,
+    GpsNavPage
   ],
   providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}]
 })
