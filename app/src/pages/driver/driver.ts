@@ -9,6 +9,7 @@ import 'rxjs/Rx';
 import { Speech } from "../../speech";
 
 declare var google;
+declare var annyang;
 
 @Component({
   selector: 'page-driver',
@@ -16,6 +17,7 @@ declare var google;
 })
 export class DriverPage {
   availableOffers: any;
+  lastValues;
   position: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private af: AngularFire) {
@@ -27,7 +29,31 @@ export class DriverPage {
     catch (ex) {
     }
 
+    if (annyang) {
+      annyang.start();
+      annyang.setLanguage('fr-FR');
+      annyang.addCommands({
+        'choisir premier': () => this.chooseItemFromIndex(1)
+      });
+      annyang.addCommands({
+        'choisir deuxième': () => this.chooseItemFromIndex(2)
+      });
+      annyang.addCommands({
+        'choisir troisième': () => this.chooseItemFromIndex(3)
+      });
+    }
     this.updateOffers();
+  }
+
+  chooseItemFromIndex(index) {
+    try {
+      const numIndex = Number.parseInt(index, 10);
+      if (this.lastValues.length > numIndex)
+        this.chooseItem(this.lastValues[numIndex]);
+    }
+    catch (err) {
+
+    }
   }
 
   updateOffers() {
@@ -35,16 +61,16 @@ export class DriverPage {
       const offersWithDistance = offers
         .filter(offer => !offer.Confirmation.DriverConfirmation && !offer.Confirmation.HitchhackerConfirmation)
         .map(offer => {
-        const distance = this.getHitchHikerDistance(offer);
-        return {
-          offer,
-          distance,
-          distanceDescription: distance === NaN ? "n'est pas disponible" : `${distance.toFixed(2)} km`
-        };
-      });
+          const distance = this.getHitchHikerDistance(offer);
+          return {
+            offer,
+            distance,
+            distanceDescription: distance === NaN ? "n'est pas disponible" : `${distance.toFixed(2)} km`
+          };
+        });
 
       const sortedOffersWithDistance = offersWithDistance.sort((a, b) => a.distance - b.distance);
-
+      this.lastValues = offers;
       Speech.say("La liste des passager à été mise à jour.")
 
       return sortedOffersWithDistance;
@@ -52,7 +78,10 @@ export class DriverPage {
   }
 
   chooseItem(item: any) {
-    this.navCtrl.push(DriverPickupPage,{offer: item, position: this.position});
+    this.navCtrl.push(DriverPickupPage, { offer: item, position: this.position });
+    if (annyang) {
+      annyang.abort();
+    }
   }
 
   getHitchHikerDistance(item: IOffer): number {
