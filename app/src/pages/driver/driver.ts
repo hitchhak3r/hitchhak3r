@@ -41,7 +41,7 @@ export class DriverPage {
           distance,
           distanceDescription: distance === NaN ? "n'est pas disponible" : `${distance.toFixed(2)} km`
         };
-      }).filter(offer => offer.distance < 25);
+      });
 
       const sortedOffersWithDistance = offersWithDistance.sort((a, b) => a.distance - b.distance);
 
