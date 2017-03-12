@@ -1,20 +1,30 @@
 page-mode-select {
-  .mode-button {
-    height: calc(50% - 10px);
-    width: 100%;
-
-    .text-row {
-      ion-label {
-        font-size: 175%;
-      }
+  .mb1{
+    background-color: map-get($colors, secondary);
+    height: 40%;
+    width: 80%;
+    position: absolute;
+    left: 10%;
+    border: 2px solid rgba(255,255,255,1);
+    border-radius: 10px;
+    img{
+      width: 100%;
+      height: auto;
     }
+  }
 
-    .icon-row {
-      ion-icon {
-        font-size: 500%;
-        text-align: center;
-        width: 100%;
-      }
+  .mb2{
+    background-color: map-get($colors, third);
+    height: 40%;
+    width: 80%;
+    position: absolute;
+    top: 50%;
+    left: 10%;
+    border: 2px solid rgba(255,255,255,1);
+    border-radius: 10px;
+    img{
+      width: 80%;
+      height: auto;
     }
   }
 }
