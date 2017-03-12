@@ -29,17 +29,19 @@ export class DriverPage {
     catch (ex) {
     }
 
-    annyang.start();
-    annyang.setLanguage('fr-FR');
-    annyang.addCommands({
-      'choisir premier': () => this.chooseItemFromIndex(1)
-    });
-    annyang.addCommands({
-      'choisir deuxième': () => this.chooseItemFromIndex(2)
-    });
-    annyang.addCommands({
-      'choisir troisième': () => this.chooseItemFromIndex(3)
-    });
+    if (annyang) {
+      annyang.start();
+      annyang.setLanguage('fr-FR');
+      annyang.addCommands({
+        'choisir premier': () => this.chooseItemFromIndex(1)
+      });
+      annyang.addCommands({
+        'choisir deuxième': () => this.chooseItemFromIndex(2)
+      });
+      annyang.addCommands({
+        'choisir troisième': () => this.chooseItemFromIndex(3)
+      });
+    }
     this.updateOffers();
   }
 
@@ -49,8 +51,8 @@ export class DriverPage {
       if (this.lastValues.length > numIndex)
         this.chooseItem(this.lastValues[numIndex]);
     }
-    catch(err) {
-    
+    catch (err) {
+
     }
   }
 
@@ -77,7 +79,9 @@ export class DriverPage {
 
   chooseItem(item: any) {
     this.navCtrl.push(DriverPickupPage, { offer: item, position: this.position });
-    annyang.abort();
+    if (annyang) {
+      annyang.abort();
+    }
   }
 
   getHitchHikerDistance(item: IOffer): number {
