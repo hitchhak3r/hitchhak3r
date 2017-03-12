@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
-import {AngularFire, FirebaseListObservable} from '../../../node_modules/angularfire2';
+import {AngularFire, FirebaseListObservable, FirebaseObjectObservable} from '../../../node_modules/angularfire2';
 
 /*
   Generated class for the ProposePickupToHichhaker page.
@@ -15,22 +15,34 @@ import {AngularFire, FirebaseListObservable} from '../../../node_modules/angular
 })
 export class ProposePickupToHichhakerPage {
 
-  lat: number = 51.678418;
-  lng: number = 7.809007;
-  myOfferConfirmation: FirebaseListObservable<any>;
+  lat: number = 0;
+  lng: number = 0;
+  mark: string = "";
+  confirmationNodeName;
+  pickupLocationNodeName;
+  offerNodeName;
+  myOfferDriverConfirmation: FirebaseObjectObservable<any>;
+  myOfferHichhakerConfirmation: FirebaseObjectObservable<any>;
+  pickupLocation;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public af: AngularFire) {
-    this.myOfferConfirmation = this.navParams.get('confirmationNode');
+    this.confirmationNodeName = this.navParams.get('confirmationNodeName');
+    this.pickupLocationNodeName = this.navParams.get('pickupLocationNodeName');
+    this.offerNodeName = this.navParams.get('offerNodeName');
+    this.myOfferDriverConfirmation = af.database.object(this.confirmationNodeName + '/DriverConfirmation');
+    this.myOfferHichhakerConfirmation = af.database.object(this.confirmationNodeName + '/HitchhackerConfirmation');
+
+    this.pickupLocation = af.database.object(this.pickupLocationNodeName, { preserveSnapshot: true });
+    this.pickupLocation.subscribe( snapshot => {
+      this.lat = snapshot.val().GeoPosition.lat;
+      this.lng = snapshot.val().GeoPosition.lng;
+      this.mark = snapshot.val().Name;
+    });
   }
 
-  cancelLift() {
-    //Todo : on passe le DriverConfirmation a faux
-    //this.myOfferConfirmation.$ref.
-    console.log("je refuse le lift");
-  }
-
-  acceptLift() {
-    //Todo : on accepte le lift
-    console.log("jaccepte le lift");
+  cancelPickupProposition() {
+    //On supprime le lift
+    this.af.database.list(this.offerNodeName).remove();
+    this.navCtrl.popToRoot();
   }
 }
