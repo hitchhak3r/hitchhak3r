@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {NavController, NavParams} from 'ionic-angular';
-import {AngularFire, FirebaseListObservable} from '../../../node_modules/angularfire2'
+import {AngularFire, FirebaseListObservable} from '../../../node_modules/angularfire2';
+import {ModeSelectPage} from '../mode-select/mode-select';
 
 declare var google;
 declare var window;
@@ -16,23 +17,26 @@ export class DriverPickupPage {
   directionsDisplay;
   map;
   closestLocation;
-  lat;
-  lng;
+  destlat;
+  destlng;
+  mylng;
+  mylat;
   offer;
-
+  name;
+  fitBounds
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public af: AngularFire) {
     this.offer = navParams.get("offer");
     this.hitchHikerPosition = this.offer.Hitchhacker.GeoPosition;
     this.pickUpLocation = af.database.list("/PickupPointLocation");
 
-    /*af.database.list("/AvailableOffers/" + this.offer.$key).$ref.on("value", (snapshot) => {
+    af.database.list("/AvailableOffers/" + this.offer.$key).$ref.on("value", (snapshot) => {
       var offer = snapshot.val();
 
       if(!offer
         || offer.Confirmation.DriverConfirmation)
         this.dismiss();
-    });*/
+    });
 
     this.directionsDisplay = new google.maps.DirectionsRenderer();
 
@@ -52,9 +56,14 @@ export class DriverPickupPage {
           this.closestLocation = location;
         }
       }
-
-      this.lat = this.closestLocation.GeoPosition.lat;
-      this.lng = this.closestLocation.GeoPosition.lng;
+      this.name = this.closestLocation.Name;
+      this.destlat = this.closestLocation.GeoPosition.lat;
+      this.destlng = this.closestLocation.GeoPosition.lng;
+      this.mylng = this.navParams.get('position').longitude;
+      this.mylat = this.navParams.get('position').latitude;
+      this.fitBounds = new google.maps.LatLngBounds();
+      this.fitBounds.extend(new google.maps.LatLng(this.mylat, this.mylng));
+      this.fitBounds.extend(new google.maps.LatLng(this.destlat, this.destlng));
     });
   }
 
@@ -64,10 +73,9 @@ export class DriverPickupPage {
 
   validate() {
     this.af.database.object("/AvailableOffers/" + this.offer.$key + "/Confirmation/DriverConfirmation").set(true);
-    this.af.database.list("/AvailableOffers/" + this.offer.$key).push({
-      PickupLocation: this.closestLocation
-    });
-    window.location = `geo:${this.lng},${this.lat};u=35`;
+    this.af.database.object("/AvailableOffers/" + this.offer.$key + "/PickupLocation").set(this.closestLocation);
+    this.navCtrl.popTo(ModeSelectPage);
+    window.location = `geo:${this.mylng},${this.mylat};u=35`;
   }
 
   ionViewDidLoad() {

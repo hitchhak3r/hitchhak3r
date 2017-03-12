@@ -52,7 +52,7 @@ export class DriverPage {
   }
 
   chooseItem(item: any) {
-    this.navCtrl.push(DriverPickupPage,{offer: item});
+    this.navCtrl.push(DriverPickupPage,{offer: item, position: this.position});
   }
 
   getHitchHikerDistance(item: IOffer): number {
