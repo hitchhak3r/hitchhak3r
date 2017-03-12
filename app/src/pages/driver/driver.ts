@@ -61,7 +61,7 @@ export class DriverPage {
         new google.maps.LatLng(this.position.latitude, this.position.longitude),
         new google.maps.LatLng(dest.lat, dest.lng));
 
-      return dist;
+      return dist / 1000;
     }
     return NaN;
   }
