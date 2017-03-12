@@ -83,7 +83,8 @@ export class HitchikerPage {
       Confirmation:{
         HitchhackerConfirmation: false,
         DriverConfirmation: false
-      }
+      },
+      PickupLocation: {}
     });
     return snap;
   }

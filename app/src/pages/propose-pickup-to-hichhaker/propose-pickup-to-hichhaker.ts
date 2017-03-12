@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
-import {AngularFire, FirebaseListObservable, FirebaseObjectObservable} from '../../../node_modules/angularfire2';
+import { AngularFire, FirebaseListObservable, FirebaseObjectObservable} from '../../../node_modules/angularfire2';
 
 /*
   Generated class for the ProposePickupToHichhaker page.
@@ -32,11 +32,13 @@ export class ProposePickupToHichhakerPage {
     this.myOfferDriverConfirmation = af.database.object(this.confirmationNodeName + '/DriverConfirmation');
     this.myOfferHichhakerConfirmation = af.database.object(this.confirmationNodeName + '/HitchhackerConfirmation');
 
+    console.log("On est ici");
     this.pickupLocation = af.database.object(this.pickupLocationNodeName, { preserveSnapshot: true });
     this.pickupLocation.subscribe( snapshot => {
-      this.lat = snapshot.val().GeoPosition.lat;
-      this.lng = snapshot.val().GeoPosition.lng;
-      this.mark = snapshot.val().Name;
+      console.log(snapshot.val());
+      //this.lat = snapshot.val().GeoPosition.lat;
+      //this.lng = snapshot.val().GeoPosition.lng;
+      //this.mark = snapshot.val().Name;
     });
   }
 
