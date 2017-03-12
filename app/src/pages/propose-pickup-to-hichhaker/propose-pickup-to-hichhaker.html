@@ -5,6 +5,9 @@
   Ionic pages and navigation.
 -->
 <ion-header>
+  <ion-toolbar>
+    <ion-title>Lieu de rencontre</ion-title>
+  </ion-toolbar>
 </ion-header>
 
 
@@ -13,8 +16,13 @@
     <sebm-google-map-marker [latitude]="lat" [longitude]="lng" [label]="mark"></sebm-google-map-marker>
   </sebm-google-map>
 
-  <ion-label>Hello, world !</ion-label>
-  <button ion-button (click)="cancelPickupProposition()" item-left>
-    Rendu !
-  </button>
+  <ion-footer>
+    <h2 class="footer-header">Avez-vous aimé votre trajet?</h2>
+    <button class="toolbar-button button-cancel" ion-button icon-left (click)="cancelPickupProposition()" item-right>
+      <ion-icon name="thumbs-down"></ion-icon><span>Je n'aime pas</span>
+    </button>
+    <button class="toolbar-button button-confirm" ion-button icon-left (click)="cancelPickupProposition()" item-right>
+      <ion-icon name="thumbs-up"></ion-icon><span>J'aime</span>
+    </button>
+  </ion-footer>
 </ion-content>
