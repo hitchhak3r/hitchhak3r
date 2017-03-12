@@ -21,7 +21,7 @@ export class GpsNavPage {
   }
 
   pickupCompleted() {
-    this.navCtrl.push(DriverPage);
+    this.navCtrl.popToRoot();
   }
 
 }
