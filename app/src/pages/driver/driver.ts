@@ -6,10 +6,8 @@ import { DriverPickupPage } from '../driver-pickup/driver-pickup';
 import { AngularFire } from '../../../node_modules/angularfire2'
 import { IOffer } from "../../model/IOffer";
 import 'rxjs/Rx';
-import { Speech } from "../../speech";
 
 declare var google;
-declare var annyang;
 
 @Component({
   selector: 'page-driver',
@@ -29,29 +27,7 @@ export class DriverPage {
     catch (ex) {
     }
 
-    annyang.start();
-    annyang.setLanguage('fr-FR');
-    annyang.addCommands({
-      'choisir premier': () => this.chooseItemFromIndex(1)
-    });
-    annyang.addCommands({
-      'choisir deuxième': () => this.chooseItemFromIndex(2)
-    });
-    annyang.addCommands({
-      'choisir troisième': () => this.chooseItemFromIndex(3)
-    });
     this.updateOffers();
-  }
-
-  chooseItemFromIndex(index) {
-    try {
-      const numIndex = Number.parseInt(index, 10);
-      if (this.lastValues.length > numIndex)
-        this.chooseItem(this.lastValues[numIndex]);
-    }
-    catch(err) {
-    
-    }
   }
 
   updateOffers() {
@@ -69,7 +45,6 @@ export class DriverPage {
 
       const sortedOffersWithDistance = offersWithDistance.sort((a, b) => a.distance - b.distance);
       this.lastValues = offers;
-      Speech.say("La liste des passager à été mise à jour.")
 
       return sortedOffersWithDistance;
     });
@@ -77,7 +52,6 @@ export class DriverPage {
 
   chooseItem(item: any) {
     this.navCtrl.push(DriverPickupPage, { offer: item, position: this.position });
-    annyang.abort();
   }
 
   getHitchHikerDistance(item: IOffer): number {

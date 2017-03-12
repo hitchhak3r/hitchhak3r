@@ -81,8 +81,8 @@ export class DriverPickupPage {
   }
 
   validate() {
-    this.af.database.object("/AvailableOffers/" + this.offer.$key + "/Confirmation/DriverConfirmation").set(true);
     this.af.database.object("/AvailableOffers/" + this.offer.$key + "/PickupLocation").set(this.closestLocation);
+    this.af.database.object("/AvailableOffers/" + this.offer.$key + "/Confirmation/DriverConfirmation").set(true);
     window.location = `geo:${this.mylng},${this.mylat};u=35`;
   }
 

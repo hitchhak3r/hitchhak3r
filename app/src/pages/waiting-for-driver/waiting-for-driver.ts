@@ -18,28 +18,29 @@ export class WaitingForDriverPage {
   offerNodeName
   confirmationNodeName;
   pickupLocationNodeName;
-  myOfferConfirmation: FirebaseListObservable<any>;
+  confirmation: FirebaseListObservable<any>;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public af: AngularFire) {
     //On se hook sur notre offre
     this.offerNodeName = this.navParams.get("offerNodeName");
     this.confirmationNodeName = this.navParams.get("confirmationNodeName");
     this.pickupLocationNodeName = this.navParams.get("pickupLocationNodeName");
-    this.myOfferConfirmation = this.af.database.list(this.confirmationNodeName);
-    this.myOfferConfirmation.$ref.on('value', (s) => {
-      if(s.val() && s.val().DriverConfirmation)
+    this.confirmation = this.af.database.list(this.confirmationNodeName + '/DriverConfirmation');
+    var me = this;
+    this.confirmation.$ref.on('value', (s) => {
+      if(s.val() && s.val())
         //Todo : ajouter la position du pickup sur la map !
-        this.navCtrl.push(ProposePickupToHichhakerPage, {
-          confirmationNodeName:this.confirmationNodeName,
-          pickupLocationNodeName:this.pickupLocationNodeName,
-          offerNodeName:this.offerNodeName
+          me.navCtrl.push(ProposePickupToHichhakerPage, {
+            confirmationNodeName:me.confirmationNodeName,
+            pickupLocationNodeName:me.pickupLocationNodeName,
+            offerNodeName:me.offerNodeName
         });
       });
   }
 
   cancelSearch(){
     //On retire l'offre et on reviens en arriere
-    this.myOfferConfirmation.$ref.off();
+    this.confirmation.$ref.off();
     this.af.database.list(this.offerNodeName).remove();
     this.navCtrl.pop();
   }

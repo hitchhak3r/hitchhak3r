@@ -32,19 +32,18 @@ export class ProposePickupToHichhakerPage {
     this.myOfferDriverConfirmation = af.database.object(this.confirmationNodeName + '/DriverConfirmation');
     this.myOfferHichhakerConfirmation = af.database.object(this.confirmationNodeName + '/HitchhackerConfirmation');
 
-    console.log("On est ici");
+    console.log(this.pickupLocationNodeName);
     this.pickupLocation = af.database.object(this.pickupLocationNodeName, { preserveSnapshot: true });
     this.pickupLocation.subscribe( snapshot => {
-      console.log(snapshot.val());
-      //this.lat = snapshot.val().GeoPosition.lat;
-      //this.lng = snapshot.val().GeoPosition.lng;
-      //this.mark = snapshot.val().Name;
+      //console.log(snapshot.val());
+      this.lat = snapshot.val().GeoPosition.lat;
+      this.lng = snapshot.val().GeoPosition.lng;
+      this.mark = snapshot.val().Name;
     });
   }
 
   cancelPickupProposition() {
     //On supprime le lift
-    this.af.database.list(this.offerNodeName).remove();
     this.navCtrl.popToRoot();
   }
 }
