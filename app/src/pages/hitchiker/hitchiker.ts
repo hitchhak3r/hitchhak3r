@@ -1,8 +1,9 @@
 import { Component, NgZone } from '@angular/core';
 import { AlertController, NavController, NavParams, ModalController } from 'ionic-angular';
 import { WaitingForDriverPage } from "../waiting-for-driver/waiting-for-driver"
-import {AngularFire, FirebaseListObservable} from '../../../node_modules/angularfire2';
+import { AngularFire, FirebaseListObservable } from '../../../node_modules/angularfire2';
 import { Geolocation } from 'ionic-native'
+import { ProposePickupToHichhakerPage } from "../propose-pickup-to-hichhaker/propose-pickup-to-hichhaker";
 
 /*
   Generated class for the Hitchiker page.
@@ -25,11 +26,11 @@ export class HitchikerPage {
   geoposOk = false;
 
   constructor(public navCtrl: NavController,
-              public navParams: NavParams,
-              private modalCtrl: ModalController,
-              private zone: NgZone,
-              private af:AngularFire,
-              private alertCtrl:AlertController) {
+    public navParams: NavParams,
+    private modalCtrl: ModalController,
+    private zone: NgZone,
+    private af: AngularFire,
+    private alertCtrl: AlertController) {
     this.autocompleteItems = [];
     this.autocomplete = {
       query: ''
@@ -40,47 +41,72 @@ export class HitchikerPage {
   }
 
   chooseItem(item: any) {
-    let alert = this.alertCtrl.create({
+    this.alertCtrl.create({
       title: "Je veux un lift pour " + item.description,
-      buttons:[
+      buttons: [
         {
-          text:"Annuler"
+          text: "Annuler"
         },
         {
-          text:"Go !",
+          text: "Go !",
           handler: () => {
             var snap = this.pushOfferToFirebase(item);
-            this.navCtrl.push(WaitingForDriverPage,{
-              offerNodeName:'/AvailableOffers/' + snap.key,
-              confirmationNodeName:'/AvailableOffers/' + snap.key + '/Confirmation',
-              pickupLocationNodeName:'/AvailableOffers/' + snap.key + '/PickupLocation'
+            var offerNodeName = '/AvailableOffers/' + snap.key;
+            var confirmationNodeName = '/AvailableOffers/' + snap.key + '/Confirmation';
+            var pickupLocationNodeName = '/AvailableOffers/' + snap.key + '/PickupLocation';
+            var confirmation = this.af.database.list(confirmationNodeName + '/DriverConfirmation');
+            var waitAlert;
+
+            confirmation.$ref.on('value', (s) => {
+              if (s.val() && s.val()) {
+                //Todo : ajouter la position du pickup sur la map !
+                this.navCtrl.push(ProposePickupToHichhakerPage, {
+                  confirmationNodeName,
+                  pickupLocationNodeName,
+                  offerNodeName
+                });
+                waitAlert.dismiss();
+              }
             });
+
+            waitAlert = this.alertCtrl.create({
+              title: "En attente d'un généreux chauffeur...",
+              buttons: [
+                {
+                  text: "Annuler",
+                  handler: () => {
+                    confirmation.$ref.off();
+                    this.af.database.list(offerNodeName).remove();
+                  }
+                }
+              ]
+            });
+            waitAlert.present();
           }
         }]
-    });
-    alert.present();
+    }).present();
   }
 
-  alertGeolocalisation(){
+  alertGeolocalisation() {
     let alert = this.alertCtrl.create({
       title: "Impossible d'obtenir votre position",
       message: "Veuillez activer votre geolocalisation et redémarrer l'application",
-      buttons:[{text:"Je comprends !"}]
+      buttons: [{ text: "Je comprends !" }]
     });
     alert.present();
   }
 
-  pushOfferToFirebase(item :any){
+  pushOfferToFirebase(item: any) {
     //On pousse les donnees a la DB
     let snap = this.availableOffers.push({
-      Destination:{
-        Geoposition:item.place_id,
-        Name:item.description
+      Destination: {
+        Geoposition: item.place_id,
+        Name: item.description
       },
-      Hitchhacker:{
+      Hitchhacker: {
         GeoPosition: this.myPosition,
       },
-      Confirmation:{
+      Confirmation: {
         HitchhackerConfirmation: false,
         DriverConfirmation: false
       },
@@ -100,10 +126,10 @@ export class HitchikerPage {
       return;
     }
     let me = this;
-    this.service.getPlacePredictions({ input: this.autocomplete.query, componentRestrictions: {country: 'CA'} }, function (predictions, status) {
+    this.service.getPlacePredictions({ input: this.autocomplete.query, componentRestrictions: { country: 'CA' } }, function (predictions, status) {
       me.autocompleteItems = [];
       me.zone.run(function () {
-        if(predictions){
+        if (predictions) {
           predictions.forEach(function (prediction) {
             me.autocompleteItems.push(prediction);
           });
@@ -112,7 +138,7 @@ export class HitchikerPage {
     });
   }
 
-  updateGeolocalisation(){
+  updateGeolocalisation() {
     Geolocation.getCurrentPosition().then((resp) => {
       this.myPosition = {
         lat: resp.coords.latitude,

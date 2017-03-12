@@ -1,7 +1,6 @@
 import {Component} from '@angular/core';
 import {NavController, NavParams} from 'ionic-angular';
 import {AngularFire, FirebaseListObservable} from '../../../node_modules/angularfire2';
-import {ModeSelectPage} from '../mode-select/mode-select';
 
 declare var google;
 declare var window;
@@ -57,6 +56,14 @@ export class DriverPickupPage {
           this.closestLocation = location;
         }
       }
+
+      if(closestDistance > 1){
+        this.closestLocation ={
+          Name: "",
+          GeoPosition: this.hitchHikerPosition,
+        }
+      }
+
       this.name = this.closestLocation.Name;
       this.destlat = this.closestLocation.GeoPosition.lat;
       this.destlng = this.closestLocation.GeoPosition.lng;
