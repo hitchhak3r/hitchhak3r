@@ -32,7 +32,13 @@ export class DriverPage {
     annyang.start();
     annyang.setLanguage('fr-FR');
     annyang.addCommands({
-      'choisir :index': (index) => this.chooseItemFromIndex(index)
+      'choisir premier': () => this.chooseItemFromIndex(1)
+    });
+    annyang.addCommands({
+      'choisir deuxième': () => this.chooseItemFromIndex(2)
+    });
+    annyang.addCommands({
+      'choisir troisième': () => this.chooseItemFromIndex(3)
     });
     this.updateOffers();
   }
@@ -71,7 +77,7 @@ export class DriverPage {
 
   chooseItem(item: any) {
     this.navCtrl.push(DriverPickupPage, { offer: item, position: this.position });
-    annyang.stop();
+    annyang.abort();
   }
 
   getHitchHikerDistance(item: IOffer): number {
