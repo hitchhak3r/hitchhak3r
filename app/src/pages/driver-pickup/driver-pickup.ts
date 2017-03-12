@@ -1,6 +1,8 @@
 import {Component} from '@angular/core';
 import {NavController, NavParams} from 'ionic-angular';
-import {AngularFire, FirebaseListObservable} from '../../../node_modules/angularfire2'
+import {AngularFire, FirebaseListObservable} from '../../../node_modules/angularfire2';
+import {ModeSelectPage} from '../mode-select/mode-select';
+
 declare var google;
 /*
  Generated class for the Driver page.
@@ -19,12 +21,26 @@ export class DriverPickupPage {
   directionsDisplay;
   map;
   closestLocation;
+  destlat;
+  destlng;
+  mylng;
+  mylat;
+  offer;
+  name;
+  fitBounds
 
-
-  constructor(public navCtrl: NavController, public navParams: NavParams, private af: AngularFire) {
-
-    this.hitchHikerPosition = navParams.get("offer").Hitchhacker.GeoPosition;
+  constructor(public navCtrl: NavController, public navParams: NavParams, public af: AngularFire) {
+    this.offer = navParams.get("offer");
+    this.hitchHikerPosition = this.offer.Hitchhacker.GeoPosition;
     this.pickUpLocation = af.database.list("/PickupPointLocation");
+
+    af.database.list("/AvailableOffers/" + this.offer.$key).$ref.on("value", (snapshot) => {
+      var offer = snapshot.val();
+
+      if(!offer
+        || offer.Confirmation.DriverConfirmation)
+        this.dismiss();
+    });
 
     this.directionsDisplay = new google.maps.DirectionsRenderer();
 
@@ -44,14 +60,14 @@ export class DriverPickupPage {
           this.closestLocation = location;
         }
       }
-
-      var dest = new google.maps.LatLng(this.closestLocation.GeoPosition.lat, this.closestLocation.GeoPosition.lng);
-      var mapOptions = {
-        zoom:7,
-        center: dest
-      };
-      this.map = new google.maps.Map(document.getElementById('map'), mapOptions);
-      this.directionsDisplay.setMap(this.map);
+      this.name = this.closestLocation.Name;
+      this.destlat = this.closestLocation.GeoPosition.lat;
+      this.destlng = this.closestLocation.GeoPosition.lng;
+      this.mylng = this.navParams.get('position').longitude;
+      this.mylat = this.navParams.get('position').latitude;
+      this.fitBounds = new google.maps.LatLngBounds();
+      this.fitBounds.extend(new google.maps.LatLng(this.mylat, this.mylng));
+      this.fitBounds.extend(new google.maps.LatLng(this.destlat, this.destlng));
     });
   }
 
@@ -60,7 +76,9 @@ export class DriverPickupPage {
   }
 
   validate() {
-    this.navCtrl.pop();
+    this.af.database.object("/AvailableOffers/" + this.offer.$key + "/Confirmation/DriverConfirmation").set(true);
+    this.af.database.object("/AvailableOffers/" + this.offer.$key + "/PickupLocation").set(this.closestLocation);
+    this.navCtrl.popTo(ModeSelectPage);
   }
 
   ionViewDidLoad() {

@@ -3,6 +3,23 @@ page-driver-pickup {
         border-radius: 0;
         display: inline-block;
         margin: 0;
-        width: 50%
+        width: 50%;
+    }
+
+    .button-cancel {
+        background-color: #ef473a;
+    }
+
+    .button-confirm {
+        background-color: #33cd5f;
+        position: absolute;
+    }
+
+    .scroll-content {
+        padding: 0 !important;
+    }
+
+    sebm-google-map {
+        height: calc(100% - 36px) !important;
     }
 }
