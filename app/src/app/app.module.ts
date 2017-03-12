@@ -5,7 +5,6 @@ import { ModeSelectPage } from "../pages/mode-select/mode-select";
 import { HitchikerPage } from "../pages/hitchiker/hitchiker";
 import { DriverPage } from "../pages/driver/driver";
 import { DriverPickupPage } from "../pages/driver-pickup/driver-pickup";
-import { WaitingForDriverPage } from "../pages/waiting-for-driver/waiting-for-driver";
 import { ProposePickupToHichhakerPage } from "../pages/propose-pickup-to-hichhaker/propose-pickup-to-hichhaker"
 
 import { AgmCoreModule } from '../../node_modules/angular2-google-maps/core';
@@ -29,7 +28,6 @@ export const firebaseConfig = {
     DriverPickupPage,
     HitchikerPage,
     ModeSelectPage,
-    WaitingForDriverPage,
     ProposePickupToHichhakerPage,
   ],
   imports: [
@@ -46,7 +44,6 @@ export const firebaseConfig = {
     DriverPickupPage,
     HitchikerPage,
     ModeSelectPage,
-    WaitingForDriverPage,
     ProposePickupToHichhakerPage
   ],
   providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}]
