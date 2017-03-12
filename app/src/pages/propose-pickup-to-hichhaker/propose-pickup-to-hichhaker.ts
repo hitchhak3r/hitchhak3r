@@ -38,7 +38,7 @@ export class ProposePickupToHichhakerPage {
       console.log(snapshot.val());
       //this.lat = snapshot.val().GeoPosition.lat;
       //this.lng = snapshot.val().GeoPosition.lng;
-      //this.mark = snapshot.val().Name; 
+      //this.mark = snapshot.val().Name;
     });
   }
 
